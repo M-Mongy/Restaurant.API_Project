@@ -10,8 +10,17 @@ namespace Restaurant.Application.Restaurant.DTOS
 {
     public class RestaurantProfile : Profile
     {
-        protected RestaurantProfile()
+        public RestaurantProfile()
         {
+            CreateMap<CreateRestaurantDto, Restaurant2>().ForMember(d => d.Address, opt => opt.MapFrom(
+            src =>new Address
+            { 
+             City = src.City,
+              PostalCode = src.PostalCode,  
+              Street=src.Street
+            }));
+
+
             CreateMap<Restaurant2, RestaurantDTO>()
                 .ForMember(d => d.City, opt => opt.MapFrom(src => src.Address.City == null ? null : src.Address.City))
                 .ForMember(d => d.PostalCode, opt => opt.MapFrom(src => src.Address.PostalCode == null ? null : src.Address.PostalCode))

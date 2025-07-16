@@ -11,6 +11,8 @@ namespace Restaurant.Domain.Repositories
     {
         Task<IEnumerable<Restaurant2>> GetAllasync();
         Task<Restaurant2?> GetByIdasync(int id);
+        Task<int> Create(Restaurant2 entity);
+
     }
 
 }
