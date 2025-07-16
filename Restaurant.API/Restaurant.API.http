@@ -6,4 +6,10 @@
 
 GET {{Restaurant.API_HostAddress}}/api/Restaurant
 
+
+
+###
+
+GET {{Restaurant.API_HostAddress}}/api/Restaurant/1
+
 ###
