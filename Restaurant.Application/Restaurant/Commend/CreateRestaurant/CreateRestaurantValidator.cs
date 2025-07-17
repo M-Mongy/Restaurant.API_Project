@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentValidation;
 using Restaurant.Application.Restaurant.DTOS;
+using FluentValidation;
 
-namespace Restaurant.Application.Restaurant.Validator
+namespace Restaurant.Application.Restaurant.Commend.CreateRestaurant
 {
-    public class CreateRestaurantValidator : AbstractValidator<CreateRestaurantDto>
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
     {
         private readonly List<string> ValidCategories = ["Italian","Enlgish","Japanese","Mexican","Amarican"];
-        public CreateRestaurantValidator()
+        public CreateRestaurantCommandValidator()
         {
             RuleFor(dto => dto.Name)
              .Length(3, 100);

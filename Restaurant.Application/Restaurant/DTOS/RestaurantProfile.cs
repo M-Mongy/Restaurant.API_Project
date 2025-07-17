@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Restaurant.Application.Restaurant.Commend.CreateRestaurant;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Restaurant.DTOS
@@ -12,7 +13,7 @@ namespace Restaurant.Application.Restaurant.DTOS
     {
         public RestaurantProfile()
         {
-            CreateMap<CreateRestaurantDto, Restaurant2>().ForMember(d => d.Address, opt => opt.MapFrom(
+            CreateMap<CreateRestaurantCommand, Restaurant2>().ForMember(d => d.Address, opt => opt.MapFrom(
             src =>new Address
             { 
              City = src.City,
