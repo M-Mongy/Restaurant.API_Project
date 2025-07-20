@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.Application.Restaurant;
 using Restaurant.Application.Restaurant.Commend.CreateRestaurant;
 using Restaurant.Application.Restaurant.Commend.DeleteRestaurant;
+using Restaurant.Application.Restaurant.Commend.PartiallyUpdate;
 using Restaurant.Application.Restaurant.DTOS;
 using Restaurant.Application.Restaurant.Queries.GetAllRestaurant;
 using Restaurant.Application.Restaurant.Queries.GetByIdRestaurant;
@@ -38,7 +39,7 @@ namespace Restaurant.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
         {
-            var isDeleted = await mediator.Send(new DeleteRestaurantQuery(id));
+            var isDeleted = await mediator.Send(new DeleteRestaurantCommand(id));
             if (isDeleted)
             {
                 return NoContent();
@@ -47,6 +48,23 @@ namespace Restaurant.API.Controllers
             {
                 return NotFound();
             }
+        }
+
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] PartiallyUpdateRestaurantCommand command) 
+        { 
+          command.Id = id;  
+            if (id!= command.Id)
+            {
+                return BadRequest();
+            }
+            var result = await mediator.Send(command);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
         [HttpPost] 
         public async Task<IActionResult> createRestaurant([FromBody] CreateRestaurantCommand command)

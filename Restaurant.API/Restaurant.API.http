@@ -34,3 +34,19 @@ Content-Type: application/json
 DELETE {{Restaurant.API_HostAddress}}/api/Restaurant/5
 
 ###
+
+
+PATCH {{Restaurant.API_HostAddress}}/api/Restaurant/3
+Content-Type: application/json
+
+{
+  "name": "Spicy",
+  "description": "A culinar like no other",
+  "category": "English"
+}
+
+###
+
+
+
+###
