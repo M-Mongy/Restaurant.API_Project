@@ -17,55 +17,42 @@ namespace Restaurant.API.Controllers
     public class RestaurantController(IMediator mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<RestaurantDTO>>> GetAll()
         {
             var resturants = await mediator.Send(new GetAllRestaurantsQuery());
             return Ok(resturants);
         }
 
         [HttpGet("{id}")]        
-        public async Task<IActionResult> GetById([FromRoute]int id)
+        public async Task<ActionResult<RestaurantDTO?>> GetById([FromRoute]int id)
         {
-            var rest_id = await mediator.Send(new GetByIdRestaurantQuery(id));
-            if (rest_id == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok(rest_id);
-            }
+
+                var rest_id = await mediator.Send(new GetByIdRestaurantQuery(id));
+                    return Ok(rest_id);
+
+
         }
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
         {
-            var isDeleted = await mediator.Send(new DeleteRestaurantCommand(id));
-            if (isDeleted)
-            {
+            await mediator.Send(new DeleteRestaurantCommand(id));
                 return NoContent();
-            }
-            else
-            {
-                return NotFound();
-            }
+            
+        
         }
 
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] PartiallyUpdateRestaurantCommand command) 
         { 
-          command.Id = id;  
-            if (id!= command.Id)
-            {
-                return BadRequest();
-            }
-            var result = await mediator.Send(command);
-            if(result == null)
-            {
-                return NotFound();
-            }
+          command.Id = id;
+            await mediator.Send(command);
             return NoContent();
-        }
+         }
         [HttpPost] 
         public async Task<IActionResult> createRestaurant([FromBody] CreateRestaurantCommand command)
         {

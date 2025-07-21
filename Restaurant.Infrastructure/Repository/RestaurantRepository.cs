@@ -36,6 +36,9 @@ namespace Restaurant.Infrastructure.Repository
             return await _dbContext.restaurants.Include(x=>x.Dishes).SingleOrDefaultAsync(x => x.Id == id);
         }
 
+        public Task SaveChanges()
+        => _dbContext.SaveChangesAsync();
+
         public async Task Update(Restaurant2 entity)
         {
             _dbContext.Update(entity);

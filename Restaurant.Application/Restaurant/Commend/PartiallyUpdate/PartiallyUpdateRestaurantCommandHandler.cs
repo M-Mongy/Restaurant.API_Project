@@ -7,34 +7,26 @@ using AutoMapper;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
+using Restaurant.Domain.Exceptions;
 using Restaurant.Domain.Repositories;
 
 namespace Restaurant.Application.Restaurant.Commend.PartiallyUpdate
 {
     public class PartiallyUpdateRestaurantCommandHandler(ILogger<PartiallyUpdateRestaurantCommandHandler> logger
-        , IMapper mapper, IRestaurantRepository restaurantRepository) : IRequestHandler<PartiallyUpdateRestaurantCommand ,bool>
+        , IMapper mapper, IRestaurantRepository restaurantRepository) : IRequestHandler<PartiallyUpdateRestaurantCommand>
     {
-        public async Task<bool> Handle(PartiallyUpdateRestaurantCommand request, CancellationToken cancellationToken)
+        public async Task Handle(PartiallyUpdateRestaurantCommand request, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"updateing Restaurant With id {request.Id}");
+            logger.LogInformation("Updating restaurant with id: {RestaurantId} with {@UpdatedRestaurant}", request.Id, request);
             var restaurant = await restaurantRepository.GetByIdasync(request.Id);
-
-            if (restaurant == null) 
-                return false;
-
-            if (!string.IsNullOrEmpty(request.Name))
-                restaurant.Name = request.Name;
-
-            if (!string.IsNullOrEmpty(request.Description))
-                restaurant.Description = request.Description;
+            if (restaurant is null)
+                throw new NotfoundException(nameof(Restaurant), request.Id.ToString());
 
 
-            if (!string.IsNullOrEmpty(request.Category))
-                restaurant.Category = request.Category;
+            mapper.Map(request, restaurant);
+         
 
-            await restaurantRepository.Update(restaurant);
-
-            return true;
+            await restaurantRepository.SaveChanges();
 
         }
     }

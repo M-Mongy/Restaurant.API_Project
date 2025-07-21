@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Restaurant.Application.Restaurant.Commend.DeleteRestaurant
 {
-    public class DeleteRestaurantCommand(int id):IRequest<bool>
+    public class DeleteRestaurantCommand(int id):IRequest
     {
         public int id { get; } = id;
     }

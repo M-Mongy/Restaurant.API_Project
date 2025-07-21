@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
     public static void addAplication(this IServiceCollection services)
     {
         var ApplicationAssmply = typeof(ServiceCollectionExtensions).Assembly;
+
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(ApplicationAssmply));
         services.AddAutoMapper(ApplicationAssmply);
         services.AddValidatorsFromAssembly(ApplicationAssmply).AddFluentValidationAutoValidation();

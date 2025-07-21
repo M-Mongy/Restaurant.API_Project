@@ -14,6 +14,7 @@ namespace Restaurant.Domain.Repositories
         Task<int> Create(Restaurant2 entity);
         Task Delete(Restaurant2 entity);
         Task Update(Restaurant2 entity);
+        Task SaveChanges();
 
     }
 
