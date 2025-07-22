@@ -50,3 +50,15 @@ Content-Type: application/json
 
 
 ###
+
+POST {{Restaurant.API_HostAddress}}/api/Restaurant/3/dishes
+Content-Type: application/json
+
+{
+  "name": "Spaghetti Boloness",
+  "description": "classic Pasta like no other",
+  "price":30,
+  "kiloCalories": 330
+}
+
+###

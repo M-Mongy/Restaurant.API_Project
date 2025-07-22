@@ -1,6 +1,20 @@
-﻿namespace Restaurant.API.Middlewares
+﻿
+using System.Diagnostics;
+
+namespace Restaurant.API.Middlewares
 {
-    public class RequestTimeLoggingMiddleware
+    public class RequestTimeLoggingMiddleware(ILogger<RequestTimeLoggingMiddleware> logger) : IMiddleware
     {
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        {
+           var stopwatch =Stopwatch.StartNew();
+            await next.Invoke(context);
+            stopwatch .Stop();
+            if(stopwatch.ElapsedMilliseconds /100 > 4)
+            {
+                logger.LogInformation("request [{verb}] at {path} took {time} ms ",
+                    context.Request.Method, context.Request.Path, stopwatch.ElapsedMilliseconds);
+            }
+        }
     }
 }

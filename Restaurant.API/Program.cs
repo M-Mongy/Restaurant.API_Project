@@ -15,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.addAplication();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ErrorHandlingMilddle>();
+builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -28,6 +29,7 @@ var seeder= scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
 await seeder.seed();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ErrorHandlingMilddle>();
+app.UseMiddleware<RequestTimeLoggingMiddleware>();
 app.UseHttpsRedirection();
 if (app.Environment.IsDevelopment())
 {
