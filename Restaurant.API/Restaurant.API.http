@@ -16,6 +16,7 @@ Authorization:Bearer {{token}}
 ###
 
 POST {{Restaurant.API_HostAddress}}/api/Restaurant
+Authorization:Bearer {{token}}
 Content-Type: application/json
  {
   "Name": "Spicy Delights",
@@ -67,7 +68,7 @@ POST {{Restaurant.API_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "testuser@test.com",
+  "email": "owner@test.com",
   "password": "Password1!"
 }
 ###

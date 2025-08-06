@@ -1,33 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Restaurant.Domain.Contents;
 using Restaurant.Domain.Entities;
+using Restaurant.Infrastructure.Seeders;
 using Restaurants.Infrastructure.Persistence;
 
-namespace Restaurant.Infrastructure.Seeders
+namespace Restaurants.Infrastructure.Seeders;
+
+internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSeeder
 {
-    internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSeeder
+    public async Task seed()
     {
-        public async Task seed()
+        if (await dbContext.Database.CanConnectAsync())
         {
-            if (await dbContext.Database.CanConnectAsync())
+            if (!dbContext.restaurants.Any())
             {
-                if (!dbContext.restaurants.Any())
-                {
-                    var result = GetRestaurant();
-                    dbContext.AddRange(result);
-                    await dbContext.SaveChangesAsync();
-                }
+                var restaurants = GetRestaurants();
+                dbContext.restaurants.AddRange(restaurants);
+                await dbContext.SaveChangesAsync();
+            }
+
+            if (!dbContext.Roles.Any())
+            {
+                var roles = GetRoles();
+                dbContext.Roles.AddRange(roles);
+                await dbContext.SaveChangesAsync();
             }
         }
+    }
 
-        private IEnumerable<Restaurant2> GetRestaurant()
-        {
-            List<Restaurant2> restaurants = [
-                new()
-                  {
+    private IEnumerable<IdentityRole> GetRoles()
+    {
+        List<IdentityRole> roles =
+            [
+                new (UserRoles.User),
+                new (UserRoles.Owner),
+                new (UserRoles.Admin),
+            ];
+
+        return roles;
+    }
+
+    private IEnumerable<Restaurant2> GetRestaurants()
+    {
+        List<Restaurant2> restaurants = [
+            new()
+            {
                 Name = "KFC",
                 Category = "Fast Food",
                 Description =
@@ -72,10 +89,8 @@ namespace Restaurant.Infrastructure.Seeders
                     PostalCode = "W1F 8SR"
                 }
             }
+        ];
 
-
-                ];
-            return restaurants;
-        }
+        return restaurants;
     }
 }

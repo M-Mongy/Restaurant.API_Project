@@ -17,13 +17,13 @@ namespace Restaurant.API.Middlewares
                 await context.Response.WriteAsync(notfound.Message);
                 logger.LogWarning(notfound.Message);
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("=Something went wrong");
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //    context.Response.StatusCode = 500;
+            //    await context.Response.WriteAsync("=Something went wrong");
 
-            }
+            //}
         }
     }
 }
