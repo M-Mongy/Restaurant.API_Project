@@ -1,44 +1,48 @@
-using Restaurant.API.Middlewares;
-using Restaurant.Application.Restaurant.DTOS;
-using Restaurant.Infrastructure.Seeders;
-using Restaurants.Application.Extensions;
 using Restaurants.Infrastructure.Extensions;
+
+using Restaurants.Application.Extensions;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
 
+using Restaurant.API.Middlewares;
+using Restaurant.Infrastructure.Seeders;
+using Restaurant.Domain.Entities;
+using Microsoft.OpenApi.Models;
+using Restaurant.API.Extentions;
+
 var builder = WebApplication.CreateBuilder(args);
-new CompactJsonFormatter();
+
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddAuthentication();
 builder.Services.addAplication();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ErrorHandlingMilddle>();
-builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
-
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Addpresentaion();
 
-builder.Host.UseSerilog((context , configration) => {
-    configration.ReadFrom.Configuration(context.Configuration);
-});
 var app = builder.Build();
 
-var scope=app.Services.CreateScope();
-var seeder= scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+
 await seeder.seed();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ErrorHandlingMilddle>();
 app.UseMiddleware<RequestTimeLoggingMiddleware>();
-app.UseHttpsRedirection();
+
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.MapGroup("api/identity").WithTags("Identity").MapIdentityApi<User>();
+
+
 app.UseAuthorization();
-app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

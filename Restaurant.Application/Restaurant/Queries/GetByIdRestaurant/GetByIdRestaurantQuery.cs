@@ -11,6 +11,7 @@ namespace Restaurant.Application.Restaurant.Queries.GetByIdRestaurant
     public class GetByIdRestaurantQuery(int id):IRequest<RestaurantDTO>
     {
         public int id { get; } = id;
+
     }
 }
  

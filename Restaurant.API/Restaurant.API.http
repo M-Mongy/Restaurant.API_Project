@@ -1,5 +1,5 @@
 @Restaurant.API_HostAddress = https://localhost:44339
-
+@token=CfDJ8Aw4hYbhb-hEhAEKdI62n7VdPescDMw_GChz6UjtgdcWkom9S-b8ZvuMo4aIoFuryxO8dcUcrx2cwUuTH5MHvYhKyAd-V4RQHSdwM6U13_bGzf9dbq8NtmoBrcW11134b5ZP1y8VXWz5Z7GYfwXWXO4-Ty3Llqqe_eYO4_mJ-kAXsa4fZpJ2ubEBAY9XSw1EXGAFS4bDqBVPAB6EmqkoNLI9t5teqQd6gTyPFXy_NaTrC8bz-4W5FTsufNF76_F-VLqecGdUAQQhBLXc9H0DFEbg47-bO-uIx15s2sahdnfE7XKdjjr-xDCY-0XFHBDZ2Bf72uIc-IOe7kXKwiO-aqDq14Fly_9nHxHpRNvbQr6DwOuxjbJ3PnbNFI_VT0Bv3pYSVGt_K9eHb8kUly1oSJNW4eWFQFRZkdTmHGzJ2YM-9z4DRn_XcimR6e1l8DdTGpKpbyvf-2xhjenrZf424aaTed7ygqPR_kV3_uGz8-W2PeAgsHVzsiQpg3xdk1KFn4p1VN8RlgZ7Cz2NWqsBO-avAbhuTmxAWE0dvyX1wzJnxcJsjgkauzNCG1yiyShjdtCMZjZW5PbEKnxerIuyOpPgtQiDp7emLggMko4TJC-dwMLsaKFmVwyy1I9TJ5KYak8YpyritdA550Vupkw4ThlV5bb7jeOJmDLE7gKZUIWfO1MhW24fsN_hCvx5LtvJUg
 
 
 ###
@@ -10,7 +10,8 @@ GET {{Restaurant.API_HostAddress}}/api/Restaurant
 
 ###
 
-GET {{Restaurant.API_HostAddress}}/api/Restaurant/145
+GET {{Restaurant.API_HostAddress}}/api/Restaurant/3
+Authorization:Bearer {{token}}
 
 ###
 
@@ -61,4 +62,20 @@ Content-Type: application/json
   "kiloCalories": 330
 }
 
+###
+POST {{Restaurant.API_HostAddress}}/api/identity/register
+Content-Type: application/json
+
+{
+  "email": "testuser@test.com",
+  "password": "Password1!"
+}
+###
+POST {{Restaurant.API_HostAddress}}/api/identity/login
+Content-Type: application/json
+
+{
+  "email": "testuser@test.com",
+  "password": "Password1!"
+}
 ###

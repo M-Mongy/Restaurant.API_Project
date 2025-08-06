@@ -12,7 +12,7 @@ using Restaurant.Domain.Repositories;
 
 namespace Restaurant.Application.Dishes.Queries.GetDishforRestaurant
 {
-    internal class GetDishesForRestaurnatQueryHandler(ILogger logger , 
+    internal class GetDishesForRestaurnatQueryHandler(ILogger<GetDishesForRestaurnatQueryHandler> logger , 
         IRestaurantRepository restaurantRepository,IMapper mapper) : IRequestHandler<GetDishesForRestaurnatQuery, IEnumerable<DishDto>>
     {
         public async Task<IEnumerable<DishDto>> Handle(GetDishesForRestaurnatQuery request, CancellationToken cancellationToken)
