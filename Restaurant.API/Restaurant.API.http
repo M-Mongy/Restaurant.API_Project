@@ -1,5 +1,5 @@
 @Restaurant.API_HostAddress = https://localhost:44339
-@token=CfDJ8Aw4hYbhb-hEhAEKdI62n7VdPescDMw_GChz6UjtgdcWkom9S-b8ZvuMo4aIoFuryxO8dcUcrx2cwUuTH5MHvYhKyAd-V4RQHSdwM6U13_bGzf9dbq8NtmoBrcW11134b5ZP1y8VXWz5Z7GYfwXWXO4-Ty3Llqqe_eYO4_mJ-kAXsa4fZpJ2ubEBAY9XSw1EXGAFS4bDqBVPAB6EmqkoNLI9t5teqQd6gTyPFXy_NaTrC8bz-4W5FTsufNF76_F-VLqecGdUAQQhBLXc9H0DFEbg47-bO-uIx15s2sahdnfE7XKdjjr-xDCY-0XFHBDZ2Bf72uIc-IOe7kXKwiO-aqDq14Fly_9nHxHpRNvbQr6DwOuxjbJ3PnbNFI_VT0Bv3pYSVGt_K9eHb8kUly1oSJNW4eWFQFRZkdTmHGzJ2YM-9z4DRn_XcimR6e1l8DdTGpKpbyvf-2xhjenrZf424aaTed7ygqPR_kV3_uGz8-W2PeAgsHVzsiQpg3xdk1KFn4p1VN8RlgZ7Cz2NWqsBO-avAbhuTmxAWE0dvyX1wzJnxcJsjgkauzNCG1yiyShjdtCMZjZW5PbEKnxerIuyOpPgtQiDp7emLggMko4TJC-dwMLsaKFmVwyy1I9TJ5KYak8YpyritdA550Vupkw4ThlV5bb7jeOJmDLE7gKZUIWfO1MhW24fsN_hCvx5LtvJUg
+@token=CfDJ8Fg8U9JB8VtDuQqZ3pji86nlFdP9p2Cp6uz_3F6w55SpOxIGC4WsVvzEWix5oc-uHgIO4Oaf9U13R5jxhU4-72jcngp-Jy2AWwJsy_hBHpG7Dlldd0QzF9olokNag1foSfpV5hCDRRCamqA8GFapceO-rFNMIRr5i1Y5sPchxpMNKcbYn5Et0uCtkfH4vTTgTq3n9F803X4UKblVT5d7mEPOs80yNZeDr6AQcc4RGYqRMMGzqfJzFStosh9Mx2_99ZRhwL2ZEReT1dnDnmcxthEFigSiEW08LAmS6Y0npnyNjgnlgOnSwPGYZSxka6-F7LKarND8tjncztjjZlco0CEwBrSbL6YOoXx8v1_NE4oLZXgBiAG2uc4YthcjyaaAObKGlRCojauotdVGeRaSbj60DbBa6IhUb8q4uR1rS83Cl_qhuaNvRL9lpBJ_NNvWvA7S1r22fGNO4aa0CtyOS1UN81TX6Aq5VHHdGOtvFU0qVN5GfQdiSVtqh-WPRwWXpVEQPUDQkCvEyZ0pq4ogdW0o3KK-lLM-K2NiVkqe8riGaCUdWQIEAC67ewvq5EXg_hkuyTnH8QE3wID1MEuA04wuU0J5e-4jIpEsejoYHM4kAWRjLQDv10522b5-SDpgc5UD9tZVfHyaLVP5ePWVaRa86V4VAgCxOF9j9I2bmWp0zCW9KnIyaSnZf6Ht9lYdVKGJhKb1dEBOSBWBpPZLf2fg6R0oqJ6PguTBOSVEIw2QvXKmDf_39TwsX1Cy6kRvXviCGf8DP39kK_6T7c0LdN67q3K4j_RCd-FgbQ8mXOND
 
 
 ###
@@ -76,7 +76,16 @@ POST {{Restaurant.API_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-  "email": "testuser@test.com",
+  "email": "owner@test.com",
   "password": "Password1!"
+}
+
+PATCH {{Restaurants.API_HostAddress}}/api/identity/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "Nationality": "French",
+    "DateOfBirth": "2010-01-01"
 }
 ###

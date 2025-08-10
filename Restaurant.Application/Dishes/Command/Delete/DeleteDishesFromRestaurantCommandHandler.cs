@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurant.Domain.Constents;
 using Restaurant.Domain.Exceptions;
 using Restaurant.Domain.Repositories;
+using Restaurant.Infrastructure.Authorization.Services;
 
 namespace Restaurant.Application.Dishes.Command.Delete
 {
     public class DeleteDishesFromRestaurantCommandHandler(ILogger<DeleteDishesFromRestaurantCommandHandler> logger
-        ,IRestaurantRepository restaurantRepository ,IDishRepository dishRepository ): IRequestHandler<DeleteDishesFromRestaurantCommand>
+        ,IRestaurantRepository restaurantRepository ,IDishRepository dishRepository,
+         IReastaurantAuthrizationService reastaurantAuthrization) : IRequestHandler<DeleteDishesFromRestaurantCommand>
     {
         public async Task Handle(DeleteDishesFromRestaurantCommand request, CancellationToken cancellationToken)
         {
@@ -21,7 +24,10 @@ namespace Restaurant.Application.Dishes.Command.Delete
 
             if (restaurant == null) throw new NotfoundException(nameof(Restaurant), request.ResturantID.ToString());
 
-           await dishRepository.Delete(restaurant.Dishes);
+            if (!reastaurantAuthrization.Authorize(restaurant, ResourceOperation.Delete))
+                throw new ForBidException();
+
+            await dishRepository.Delete(restaurant.Dishes);
 
         }
     }

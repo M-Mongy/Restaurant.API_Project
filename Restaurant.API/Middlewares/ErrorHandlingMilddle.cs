@@ -17,13 +17,18 @@ namespace Restaurant.API.Middlewares
                 await context.Response.WriteAsync(notfound.Message);
                 logger.LogWarning(notfound.Message);
             }
-            //catch (Exception ex)
-            //{
-            //    logger.LogError(ex, ex.Message);
-            //    context.Response.StatusCode = 500;
-            //    await context.Response.WriteAsync("=Something went wrong");
+            catch (ForBidException)
+            {
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsync("Access forbidden");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync("=Something went wrong");
 
-            //}
+            }
         }
     }
 }

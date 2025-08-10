@@ -12,6 +12,7 @@ using Restaurant.Application.Restaurant.Queries.GetAllRestaurant;
 using Restaurant.Application.Restaurant.Queries.GetByIdRestaurant;
 using Restaurant.Domain.Contents;
 using Restaurant.Domain.Repositories;
+using Restaurant.Infrastructure.Authentication;
 
 namespace Restaurant.API.Controllers
 {
@@ -28,7 +29,8 @@ namespace Restaurant.API.Controllers
             return Ok(resturants);
         }
 
-        [HttpGet("{id}")] 
+        [HttpGet("{id}")]
+        [Authorize(Policy= policy.HasNationality)]
         public async Task<ActionResult<RestaurantDTO?>> GetById([FromRoute]int id)
         {
                 var rest_id = await mediator.Send(new GetByIdRestaurantQuery(id));

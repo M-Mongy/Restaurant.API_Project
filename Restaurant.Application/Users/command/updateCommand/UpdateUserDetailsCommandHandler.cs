@@ -7,10 +7,9 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Restaurant.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Restaurant.Application.Users;
 using Restaurant.Domain.Exceptions;
 
-namespace Restaurant.Application.Users.command
+namespace Restaurant.Application.Users.command.updateCommand
 {
     public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHandler> logger
         ,IuserContext userContext , IUserStore<User> userStore) : IRequestHandler<UpdateUserDetailsCommand>
