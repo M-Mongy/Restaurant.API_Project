@@ -7,9 +7,11 @@ using Restaurant.Domain.Entities;
 using Restaurant.Domain.Repositories;
 using Restaurant.Infrastructure.Authentication;
 using Restaurant.Infrastructure.Authentication.Requerments;
+using Restaurant.Infrastructure.Authorization.Requerments;
 using Restaurant.Infrastructure.Authorization.Services;
 using Restaurant.Infrastructure.Repository;
 using Restaurant.Infrastructure.Seeders;
+using Restaurants.Infrastructure.Authorization.Services;
 using Restaurants.Infrastructure.Persistence;
 using Restaurants.Infrastructure.Seeders;
 
@@ -33,10 +35,14 @@ public static class ServiceCollectionExtensions
 
         services.AddAuthorizationBuilder()
             .AddPolicy(policy.HasNationality, builder => builder.RequireClaim(AppClaimsTypes.Nationality))
-        .AddPolicy(policy.Atleast20, builder => builder.AddRequirements(new MinmumAppRequerment(20)));
+        .AddPolicy(policy.Atleast20, builder => builder.AddRequirements(new MinmumAppRequerment(20)))
+        .AddPolicy(policy.createAtlest2Restaurants,
+        builder => builder.AddRequirements(new createmultipleRestaurantRequerment(2)));
 
         services.AddScoped<IAuthorizationHandler, MinmumAppRequermentHandler>();
+        services.AddScoped<IAuthorizationHandler, createmultipleRestaurantRequermentHandler>();
+        services.AddScoped<IReastaurantAuthrizationService, RestaurantAuthorizationService>();
 
-        services.AddScoped<IReastaurantAuthrizationService, ReastaurantAuthrizationService>();
+
     }
 }

@@ -5,6 +5,7 @@ using Restaurant.Application.Restaurant;
 using Restaurant.Application.Restaurant.DTOS;
 using Restaurant.Application.Users;
 using Restaurant.Domain.Repositories;
+using Restaurant.Infrastructure.Authorization.Services;
 
 namespace Restaurants.Application.Extensions;
 

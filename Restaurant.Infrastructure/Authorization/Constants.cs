@@ -10,6 +10,7 @@ namespace Restaurant.Infrastructure.Authentication
     {
         public const string HasNationality = "HasNationality";
         public const string Atleast20 = "Atleast20";
+        public const string createAtlest2Restaurants = "createAtlest2Restaurants";
     }
 
     public static class AppClaimsTypes
