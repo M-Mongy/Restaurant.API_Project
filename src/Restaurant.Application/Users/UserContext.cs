@@ -36,7 +36,7 @@ namespace Restaurant.Application.Users
 
 
 
-            return new CurrentUser(userId, email, roles, DateOfBirthString, DateOfBirth);
+            return new CurrentUser(userId, email, roles, Nationality, DateOfBirth);
         }
     }
 }
